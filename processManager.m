@@ -440,15 +440,17 @@ classdef processManager < handle
             [~,exitValue] = self.isRunning(self.process);
          end
       end
-      
-      function check(self)
+
+      function done = check(self)
+          done=0;
          for i = 1:numel(self)
             if ~self(i).running && isa(self(i).process,'java.lang.Process')
+                done=done+1;
                fprintf('Process %s finished with exit value %g.\n',self(i).id,self(i).exitValue);
-            elseif self(i).running && isa(self(i).process,'java.lang.Process')
-               fprintf('Process %s is still running.\n',self(i).id);
-            else
-               fprintf('Process %s has not been started yet.\n',self(i).id);
+%             elseif self(i).running && isa(self(i).process,'java.lang.Process')
+%                fprintf('Process %s is still running.\n',self(i).id);
+%             else
+%                fprintf('Process %s has not been started yet.\n',self(i).id);
             end
          end
       end
